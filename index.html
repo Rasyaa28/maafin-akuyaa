@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maafin Aku ❤️</title>
+  <meta name="description" content="Halaman permintaan maaf romantis yang bisa kamu kirim ke pasanganmu." />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --bg1:#101021; --bg2:#1e1e3f; --accent:#ff6b81; --accent-2:#ffd166; --text:#f6f7fb; --muted:#b7b9d3;
+      --card:#181832; --glass:rgba(255,255,255,.06);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family:Poppins,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
+      background: radial-gradient(1200px 800px at 80% -10%, #2a2a59 0%, transparent 60%),
+                  radial-gradient(1200px 900px at -10% 110%, #3a1f4a 0%, transparent 60%),
+                  linear-gradient(160deg, var(--bg1), var(--bg2));
+      overflow-x:hidden;
+    }
+    .container{max-width:980px;margin:auto;padding:18px}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 18px}
+    .badge{font-size:12px;padding:6px 10px;border:1px solid var(--glass);border-radius:999px;color:var(--muted);backdrop-filter:blur(10px);}
+    .card{
+      background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+      border:1px solid rgba(255,255,255,.08);border-radius:24px; padding:28px; box-shadow:0 20px 60px rgba(0,0,0,.35);
+      position:relative; overflow:hidden;
+    }
+    h1{margin:0;font-size:clamp(28px,5vw,46px);line-height:1.1;letter-spacing:.2px}
+    h1 span.name{color:var(--accent);text-shadow:0 8px 30px rgba(255,107,129,.35)}
+    p.lead{color:var(--muted);margin-top:12px;font-size:clamp(14px,2.2vw,18px)}
+
+    .typewriter{min-height:64px;margin-top:14px;font-size:clamp(16px,2.4vw,20px);line-height:1.6}
+    .actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:20px}
+    button,a.button{
+      appearance:none;border:0;border-radius:999px;padding:14px 20px;font-weight:700;cursor:pointer;
+      background:var(--accent);color:#fff;box-shadow:0 12px 30px rgba(255,107,129,.35);transition:.2s transform,.2s filter
+    }
+    button.secondary{background:transparent;border:1.5px solid rgba(255,255,255,.18);color:var(--text)}
+    button:hover,a.button:hover{transform:translateY(-1.5px)}
+    button:active,a.button:active{transform:translateY(0)}
+
+    .promise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+    .promise{background:var(--glass);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:14px}
+    .promise b{color:var(--accent-2)}
+
+    .footer{margin-top:24px;color:var(--muted);font-size:14px}
+
+    /* Floating hearts */
+    .heart{position:fixed;bottom:-40px;pointer-events:none;filter:drop-shadow(0 6px 18px rgba(255,107,129,.35));}
+    .heart svg{width:28px;height:28px;fill:var(--accent);opacity:.8}
+
+    /* Photo strip (optional) */
+    .photos{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin-top:18px}
+    .photos img{width:100%;height:180px;object-fit:cover;border-radius:16px;border:1px solid rgba(255,255,255,.08)}
+
+    /* Signature */
+    .signature{margin-top:24px;display:flex;align-items:center;gap:10px;color:#fff9}
+    .sig-name{font-weight:700;color:#fff}
+
+    /* Responsive tweaks */
+    @media (max-width:720px){
+      .promise-grid{grid-template-columns:1fr}
+      .photos img{height:150px}
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="badge">💌 Surat Terbuka</div>
+      <div class="badge" id="dateBadge"></div>
+    </header>
+
+    <section class="card">
+      <h1>Untuk <span class="name" id="partnerName">Bebell</span>, dari Rasya.</h1>
+      <p class="lead">aku bikin ini dengan sepenuh hati. aku sadar, aku salah. dan aku benar-benar minta maaf yaa sayang.</p>
+
+      <div class="typewriter" id="typeTarget" aria-live="polite"></div>
+
+      <div class="actions">
+        <button id="btnForgive">🤍 Maafin Aku</button>
+        <a id="btnWA" class="button" href="#" target="_blank" rel="noopener">Kirim ke WhatsApp</a>
+        <button class="secondary" id="btnReplay">Putar Ulang Pesan</button>
+      </div>
+
+      <div class="promise-grid" id="promiseGrid">
+        <div class="promise">🧭 <b>MAAFIN AKU YAA SAYANG</b> I LOVE YOU.</div>
+        <div class="promise">⏳ <b>aku akuin aku salah</b> aku gamau ulangin</div>
+        <div class="promise">🤝 <b>aku sayang kamu</b> dimaafin yaa cantik</div>
+      </div>
+
+      <div class="photos" id="photoStrip" style="display:none"></div>
+
+      <div class="signature">
+        <span>Ditulis oleh</span>
+        <span class="sig-name" id="senderName">Rasya</span>
+        <span>—</span>
+        <span id="signatureDate"></span>
+      </div>
+    </section>
+
+    <p class="footer">I LOVE YOU I LOVE YOU I LOVE YOU I LOVE YOU I LOVE YOU</p>
+
+  </div>
+
+  <!-- Tiny heart template for animation -->
+  <template id="heartTpl">
+    <div class="heart" aria-hidden="true">
+      <svg viewBox="0 0 24 24"><path d="M12 21s-6.716-4.17-9.428-6.882C-1.43 12.977-.58 8.32 2.65 6.64A4.997 4.997 0 0 1 12 7.09a4.997 4.997 0 0 1 9.35-.45c3.23 1.68 4.08 6.337-.922 7.478C18.716 16.83 12 21 12 21z"/></svg>
+    </div>
+  </template>
+
+  <script>
+    // =========================
+    // KONFIGURASI YANG BISA DIEDIT
+    // =========================
+    const config = {
+      partnerName: "Bebellku sayang",          // Nama pasangan
+      senderName: "acong",           // Namamu
+      messages: [                        // Kalimat akan ditulis satu per satu (efek mesin tik)
+        "Aku sadar aku bikin kecewa/bt/kesel.",
+        "aku hanya ada penyesalan dan niat untuk memperbaiki.",
+        "aku sadar aku salah, aku dah buat kamu bt terus juga dari kemaren",
+        "Maafin aku yaa, please. Aku sayang kamu."
+      ],
+      promises: [                        // Ubah atau tambah janji di sini
+        "aku janji aku gabakal ulangin kesalahan aku ituu",
+        "yang ngga nunggu kamu, ngasih link double, salah kasi barcode juga",
+        "gamau ulangin dan menyesal",
+      ],
+      photos: [                          // Foto-foto kenangan (opsional)
+        // "https://i.pinimg.com/564x/86/40/57/864057878566829344.jpg",
+        // "https://i.imgur.com/l5Da9Eo.jpg"
+  ]
+    };
+
+    // =========================
+    // LOGIKA APLIKASI
+    // =========================
+    const elPartner = document.getElementById('partnerName');
+    const elSender = document.getElementById('senderName');
+    const elSigDate = document.getElementById('signatureDate');
+    const elType = document.getElementById('typeTarget');
+    const elDateBadge = document.getElementById('dateBadge');
+    const elWA = document.getElementById('btnWA');
+    const elReplay = document.getElementById('btnReplay');
+    const elForgive = document.getElementById('btnForgive');
+    const elPhotoStrip = document.getElementById('photoStrip');
+    const elPromiseGrid = document.getElementById('promiseGrid');
+
+    // Set nama dan tanggal
+    elPartner.textContent = config.partnerName;
+    elSender.textContent = config.senderName;
+    const today = new Date();
+    const localeOpts = { day:'2-digit', month:'long', year:'numeric' };
+    elSigDate.textContent = today.toLocaleDateString('id-ID', localeOpts);
+    elDateBadge.textContent = today.toLocaleDateString('id-ID', { weekday:'long', ...localeOpts });
+
+    // Render janji sesuai konfigurasi
+    if (Array.isArray(config.promises) && config.promises.length){
+      elPromiseGrid.innerHTML = '';
+      config.promises.forEach(p => {
+        const div = document.createElement('div');
+        div.className = 'promise';
+        div.textContent = '✔️ ' + p;
+        elPromiseGrid.appendChild(div);
+      });
+    }
+
+    // Render foto jika ada
+    if (Array.isArray(config.photos) && config.photos.length){
+      elPhotoStrip.style.display = '';
+      config.photos.forEach(url => {
+        const img = document.createElement('img');
+        img.loading = 'lazy';
+        img.src = url;
+        img.alt = 'Kenangan kita';
+        elPhotoStrip.appendChild(img);
+      });
+    }
+
+    // Mesin tik sederhana
+    let lineIdx = 0, charIdx = 0, typing = false;
+    function typeNext(){
+      if (typing) return; typing = true;
+      elType.textContent = '';
+      charIdx = 0;
+      const line = config.messages[lineIdx];
+      const timer = setInterval(() => {
+        elType.textContent = line.slice(0, ++charIdx);
+        if (charIdx >= line.length){
+          clearInterval(timer); typing = false;
+          lineIdx = (lineIdx + 1) % config.messages.length;
+          // jeda antar kalimat
+          setTimeout(() => typeNext(), 900);
+        }
+      }, 30);
+    }
+    typeNext();
+    elReplay.addEventListener('click', () => { lineIdx = 0; typeNext(); });
+
+    // WhatsApp link
+    function updateWA(){
+      const msg = `Untuk ${config.partnerName},\n\n` + config.messages.join(' ')
+        + `\n\nDitulis oleh ${config.senderName} pada ${elSigDate.textContent}.`;
+      const waText = encodeURIComponent(msg);
+      const base = config.whatsappNumber ? `https://wa.me/${config.whatsappNumber}` : 'https://wa.me/';
+      elWA.href = `${base}?text=${waText}`;
+    }
+    updateWA();
+
+    // Tombol Maafin Aku -> animasi hati + getar halus
+    elForgive.addEventListener('click', () => {
+      vibrate(40);
+      burstHearts();
+    });
+
+    function vibrate(ms){ if (window.navigator.vibrate) try{ navigator.vibrate(ms); }catch(_){} }
+
+    // Animasi hati terapung
+    function burstHearts(){
+      for (let i=0;i<24;i++) setTimeout(spawnHeart, i*60);
+    }
+    function spawnHeart(){
+      const tpl = document.getElementById('heartTpl');
+      const node = tpl.content.firstElementChild.cloneNode(true);
+      const startX = Math.random() * window.innerWidth;
+      const drift = (Math.random()*120 - 60);
+      const duration = 4000 + Math.random()*2000;
+      node.style.left = startX + 'px';
+      document.body.appendChild(node);
+      const start = performance.now();
+      const startRot = Math.random()*120 - 60;
+      const rotDir = Math.random() > .5 ? 1 : -1;
+      const animate = (t)=>{
+        const p = Math.min(1,(t-start)/duration);
+        const y = window.innerHeight - (window.innerHeight+80)*p;
+        const x = startX + drift*Math.sin(p*Math.PI);
+        node.style.transform = `translate(${x-startX}px, ${y}px) rotate(${startRot + rotDir*180*p}deg) scale(${.8 + p*.4})`;
+        node.style.opacity = String(1-p);
+        if (p<1) requestAnimationFrame(animate); else node.remove();
+      };
+      requestAnimationFrame(animate);
+    }
+
+    // Jika user mengganti config di devtools, update langsung
+    Object.defineProperty(window, 'appConfig', {
+      get(){ return config },
+      set(v){ Object.assign(config, v||{}); updateWA(); }
+    });
+  </script>
+</body>
+</html>
